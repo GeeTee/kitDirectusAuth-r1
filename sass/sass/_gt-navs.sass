@@ -1,0 +1,38 @@
+.pagination-section
+    &.pagination-yes
+        @extend .is-size-7 
+        @extend .is-uppercase
+        &.previous
+            order: 1
+            margin-right: .5rem
+        &.next
+            order: 2
+            margin-left: .5rem
+    &.pagination-no 
+        visibility: hidden
+        height: 0
+        overflow: hidden
+        width: 0
+        &.previous
+            order: 1
+        &.next
+            order: 2
+
+.nav-top-bar.navbar 
+    background: $main-color-1
+    z-index: 1100
+
+a.navbar-item
+    color: $main-color-2
+    &.is-active,
+    &:hover,
+    &:focus
+        background-color: lighten($main-color-1, 5%)
+        color: lighten($main-color-2, 55%)
+
+// Menus en footer 
+footer
+    .footer-nav 
+        a.navbar-item
+            padding-left: 0
+

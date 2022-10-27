@@ -1,0 +1,26 @@
+$main-color-2: $black-mat
+$border-radius-base: 2px
+$grid-float-breakpoint: 760px
+
+#main-leaflet
+    position: relative
+    #mapLocalisation 
+        height: 400px
+        z-index: 1
+    #smallMapLocalisation 
+        $dim: 200px
+        border: 4px solid $main-color-2
+        border-radius: $border-radius-base
+        height: $dim
+        position: absolute
+        right: 10px
+        top: 10px
+        width: $dim
+        z-index: 2000
+        .leaflet-control-attribution.leaflet-control 
+            display: none
+        @media (max-width: $grid-float-breakpoint) 
+            display: none
+    
+#releases-map
+    min-height: 40rem

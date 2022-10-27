@@ -1,0 +1,40 @@
+#gt-cols,
+#gt-cols-by-hand
+    @media (min-width: $screen-min-news-breakpoint-sm)
+        &.children-2,
+        &.children-3,
+        &.children-4,
+            // background-color: red
+            display: grid 
+            grid-gap: $grid-gap
+            grid-template-columns: repeat(auto-fill, minmax(45%, 1fr))
+    @media (min-width: $screen-min-news-breakpoint-md)
+        &.children-3,
+        &.children-4
+            grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)) 
+    &.four-per-lines
+          @media (min-width: $screen-min-news-breakpoint-md)
+            &.children-3
+                grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
+            &.children-4
+                grid-template-columns: repeat(auto-fill, minmax(20%, 1fr))
+
+
+@supports (display: grid) 
+  #gt-cols, 
+  #gt-cols-by-hand,
+  #gt-cols.four-per-lines, 
+  #gt-cols-by-hand.four-per-lines 
+    @media (min-width: $screen-min-news-breakpoint-sm)
+      &.children-4,
+      &.children-3,
+      &.children-2
+          > .item
+            margin: 0
+            width: auto
+    @media (min-width: $screen-min-news-breakpoint-md)
+      margin: 0
+      &.children-4,
+      &.children-3
+        > .item 
+          margin-left: 0

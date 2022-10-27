@@ -1,0 +1,72 @@
+.blocs-argumentation 
+    &.simple-vertical 
+        align-items: center
+        display: flex 
+        flex-direction: column
+    &.alternate-blocks
+        > div
+            @extend .block
+        @media (min-width: $screen-md) 
+            &.alternate-blocks
+                > div
+                    $dim: 5rem
+                    width: 75%
+                    max-width: 50rem
+                    margin-bottom: $dim
+                    margin-top: $dim
+                    &:first-of-type
+                        margin-top: $dim * 2
+                    // margin-left: auto
+                    // margin-right: auto
+                    &:nth-child(even)
+                        // align-self: flex-end
+                        .blocs--argumentation-argument-redaction
+                            order: 1
+                        .blocs--argumentation-argument-img
+                            order: 0
+
+// var pour block-header et single-as-logo
+$pl: 3.75rem
+.block-header
+    display: flex
+    align-items: center
+    height: $pl
+    // padding: .5rem .5rem .5rem $pl
+    width: 100%
+    > h3
+        font-size: 5vw
+        margin-left: 0.5rem
+        width: 100%
+        @media (min-width: $screen-md) 
+            font-size: 2vw
+
+
+// .single-as-logo
+//     align-items: center
+//     display: flex
+//     hgroup 
+//         order: 1
+//         margin-left: .5rem
+//     .as-logo
+//         height: $pl
+//         width: $pl
+//         oder: 0
+
+// .block-header,
+// .single-as-logo .as-logo
+//     &.business-solutions, 
+//     &.blue-diamond,
+//     &.babylon-up,
+//     &.pro-events,
+//     &.proprietes-de-chasse 
+//         background: url('images/sprite-5logos-x300.png')
+//         background-color: transparent
+//         background-repeat: no-repeat
+//     &.blue-diamond
+//         background-position: 0 -240px
+//     &.babylon-up
+//         background-position: 0 -180px
+//     &.pro-events
+//         background-position: 0 -60px
+//     &.proprietes-de-chasse 
+//         background-position: 0 -120px

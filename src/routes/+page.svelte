@@ -1,0 +1,1 @@
+<h1 class="tile has-text-centered">Home page</h1>

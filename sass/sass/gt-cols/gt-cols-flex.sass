@@ -1,0 +1,46 @@
+
+.item 
+    margin-bottom: 2rem !important
+
+#gt-cols,
+#gt-cols-by-hand
+    &.children-1
+        > .item 
+            margin:  0 auto
+            width: 80%
+            max-width: 50ch
+    @media (min-width: $screen-min-news-breakpoint-sm)
+        &.children-2,
+        &.children-3,
+        &.children-4,
+            display: flex
+            flex-flow: row wrap
+            justify-content: space-between
+            > .item 
+                width: calc((100% / 2) - 1rem)
+    @media (min-width: $screen-min-news-breakpoint-md)
+        &.children-3,
+        &.children-4
+            margin-left: -1rem
+            justify-content: flex-start
+            > .item 
+                &:not(no-left-margin)
+                    margin-left: 1rem
+                width: calc((100% / 3) - 1rem)
+        &.children-4
+            > .item 
+                width: calc((100% / 4) - 1rem)
+        &.four-per-lines
+            @media (min-width: $screen-min-news-breakpoint-md)
+                margin-left: -1rem
+                &.children-3,
+                &.children-4
+                    justify-content: flex-start
+                    > .item 
+                        margin-left: 1rem
+                &.children-3
+                    > .item
+                        width: calc((100% / 3) - 1rem)
+                &.children-4
+                    > .item
+                        width: calc((100% / 4) - 1rem)

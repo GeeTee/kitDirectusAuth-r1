@@ -1,0 +1,45 @@
+body 
+    min-height: 100vh
+#main-header
+    align-items: center
+    display: flex
+    flex-direction: column
+    padding-bottom: 1rem
+    hgroup
+        h1, h2, p 
+            text-align: center
+    // figure 
+    //     order: 0
+    //     max-width: 10rem
+    // @media (min-width: 31rem) 
+    //     flex-flow: row nowrap
+
+
+
+#main-header 
+    position: relative
+    z-index: 3
+    h1,
+    p,
+    nav 
+        z-index: 3
+main 
+    > * 
+        @extend .mb-4
+
+// #main-content
+//     display: flex;
+//     flex-direction: column
+//     padding-top: 1rem
+//     footer
+//         border-top: 1px solid transparent
+//         margin-top: auto
+
+.container.main-container-bgc
+    > *
+        @extend .px-4
+
+// footer 
+//     &:not(.is-in-item)
+//         @extend .dark-bg
+

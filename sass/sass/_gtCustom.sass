@@ -1,0 +1,96 @@
+
+
+
+@import "gt-vars"
+@import "gt-cols/gt-cols-var"
+@import "gt-cols/gt-cols-flex"
+@import "gt-cols/gt-cols-cssGrid"
+@import "gt-utilities"
+@import "gt-global-layout"
+// @import "gt-navs"
+// @import "gt-home-page"
+// @import "gt-flip-card"
+// @import "gt-loader"
+// @import "gt-loading"
+// @import "gt-contact-form"
+// @import "gt-footer"
+@import "gt-blocs-argumentation"
+// @import "gt-maps"
+@import "gt-vcards"
+// @import "gt-shop-article.scss"
+
+// .test 
+//     color:red !important
+//     @extend .p-2
+
+p 
+    @extend .py-2
+    
+// .show-product
+//     header
+//         order: 2
+
+// .show-article-product
+//     > p 
+//         order: 2
+
+// .gt-vignette
+//     width: 64px
+//     order: 1
+
++tablet 
+    .gt-half-centered
+        margin: 0 auto
+        width: 80%
+        max-width: 800px
+        
+    .big-article .banner +  .gt-half-centered
+        max-width: 800px
+        position: relative
+        top: -2rem
+
+.readmore-in-flex 
+    display: flex
+    flex-direction: column
+    .readmore 
+        margin-top: auto
+    
+// .gt-item-content-in-list
+//     display: flex
+//     flex-direction: column
+.gt-content
+    p:not(:last-child)
+        @extend .block
+
+.is-text-overflow 
+    flex: 1
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+
+// .post-list-img
+//     text-align: center
+//     > a 
+//         display: block
+
+  
+// .portfolio
+//     .item.gtcard 
+//         position: relative
+//         img 
+//             vertical-align: middle
+//     .item-header 
+//         @extend .title-bg
+
+// .no-preserve3d .gtcard
+//     @extend .glassy !optional
+//     .face.back .button 
+//         @extend .is-pulled-right
+
+// sitemap 
+// .sitemapUl 
+//     > li 
+//         text-transform: uppercase
+//         &:not(:first-child) 
+//             margin-top: 1rem
+
