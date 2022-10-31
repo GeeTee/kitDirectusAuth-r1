@@ -5,7 +5,7 @@
     export let isAuthenticated = false
     export let padLeft = false
 
-    console.log('NAVLINKS', {path})
+    // console.log('NAVLINKS', {path})
 
 </script>
 

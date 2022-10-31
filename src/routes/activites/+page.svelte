@@ -1,0 +1,1 @@
+<h1 class="title">Toutes les activités - public</h1>

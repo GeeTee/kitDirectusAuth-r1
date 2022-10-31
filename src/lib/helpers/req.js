@@ -9,9 +9,8 @@ const getAllArticles = async () => {
         },
         body: JSON.stringify({
             query: `
-                query ($title: String) {
-                    advanced_articles (filter: {project: {project_title: {_eq: $title}}}) {
-                        status
+                query {
+                    advanced_articles {
                         id
                         title
                         slug 
@@ -20,22 +19,22 @@ const getAllArticles = async () => {
                         gallery_photos
                         gallery_videos
                         main_text
+                        connected_to_page {
+                            slug
+                        }
                     }
                 }
-            `,
-            variables: {
-                title: PROJECT_TITLE
-            }
+            `
         })
     })
 
     const {data: {advanced_articles}} = await res.json()
     const items = advanced_articles
-    console.log('req getAllArticles', {items})
+    // console.log('req getAllArticles', {items})
     return items
 }
 
-const getArticleBySlug = async (slug) => {
+const getArticleBySlug = async (fetch,slug) => {
     if (typeof slug !== 'string') return
     const res = await fetch(`${url}/graphql`, {
         method: 'POST',
@@ -44,13 +43,8 @@ const getArticleBySlug = async (slug) => {
         },
         body: JSON.stringify({
             query: `
-                query ($slug: String, $title: String) {
-                    advanced_articles (filter: {_and: [
-                        {slug: {_eq: $slug}},
-                        {project: {project_title: {_eq: $title}}}
-                    ]}) {
-                        status
-                        id
+                query ($slug: String) {
+                    advanced_articles (filter: {connected_to_page: {slug: {_eq: $slug}}})  {
                         title
                         slug 
                         cld_public_id
@@ -63,14 +57,16 @@ const getArticleBySlug = async (slug) => {
             `,
             variables : {
                 slug,
-                title: PROJECT_TITLE
             }
         })
     })
 
+    // const {data} = await res.json()
+    // console.log('req getArticleBySlug', {data})
+
     const {data: {advanced_articles}} = await res.json()
     const item = advanced_articles[0]
-    console.log('req getArticleBySlug', {item})
+    // console.log('req getArticleBySlug', {item})
     return item
 }
 
@@ -158,45 +154,9 @@ const getTestSlug = async (slug) => {
     // console.log('req getTestSlug', {item})
     return item    
 }
-// MENUS NAVS
-// const getNavMetiers = async () => {
-//     console.log('getMenu')
-//     const res = await fetch(`${url}/graphql`, {
-//         method: 'POST',
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             query: `
-//                 query ($project_title: String) {
-//                     menu_metiers (filter: {_and: [
-//                         {project: {project_title: {_eq: $project_title}}},
-//                         {status: {_eq: "published"}}
-//                     ]}) {
-//                         id
-//                         status 
-//                         project {
-//                             id
-//                         }
-//                         title
-//                         slug
-//                     }
-//                 }
-//             `,
-//             variables : {
-//                 project_title: PROJECT_TITLE
-//             }
-//         })
-//     })
-
-//     const {data: {menu_metiers}} = await res.json()
-//     const items = [...menu_metiers]
-//     // console.log('req getMenu', {items})
-//     return items
-// }
 
 const getNavGenerale = async () => {
-    console.log('getMenu')
+    // console.log('getNavGenerale')
     const res = await fetch(`${url}/graphql`, {
         method: 'POST',
         headers: {
@@ -217,12 +177,12 @@ const getNavGenerale = async () => {
 
     const {data: {menu_general}} = await res.json()
     const items = [...menu_general]
-    console.log('Req getNavGenerale', {items})
+    // console.log('Req getNavGenerale', {items})
     return items
 }
 
 const getNavMetiers = async () => {
-    console.log('getMenu')
+    // console.log('getNavMetiers')
     const res = await fetch(`${url}/graphql`, {
         method: 'POST',
         headers: {
@@ -234,6 +194,7 @@ const getNavMetiers = async () => {
                     menu_metiers {
                         title
                         slug
+                        beAuthenticated
                     }
                 }
             `
@@ -242,7 +203,7 @@ const getNavMetiers = async () => {
 
     const {data: {menu_metiers}} = await res.json()
     const items = [...menu_metiers]
-    console.log('Req getNavMetiers', {items})
+    // console.log('Req getNavMetiers', {items})
     return items
 }
 

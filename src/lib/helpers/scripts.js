@@ -8,7 +8,7 @@ const condensifyPhone = (phone) => {
 const checkAuthentif = (beA, isA, href) => {
     // beA = beAutheticated
     // isA = isAuthenticated
-    console.log('checkAuthentif', {beA}, {isA})
+    // console.log('Scripts checkAuthentif', {href}, {beA}, {isA})
     if (typeof beA !== 'string' || (isA && typeof isA !== 'boolean') || (href && typeof href !== 'string')) return 
     if (beA === 'yes' && isA === true) {
         return false
@@ -22,27 +22,44 @@ const checkAuthentif = (beA, isA, href) => {
     return false
 }
 
-const builMenuArray = (arr) => {
+const builMenuArray = (arr, subFolder) => {
   if (!Array.isArray(arr)) return
-  const menuArray = arr.map(obj => {
+  if (subFolder && typeof subFolder !== 'string') return
+  let menuArray = []
+  if (!subFolder) {
+      menuArray = arr.map(obj => {
 
-      if (obj.slug == 'home') {
+        if (obj.slug == 'home') {
+          let {title, beAuthenticated} = obj 
+          let href = '/'
+          return {
+            title,
+            href,
+            beAuthenticated
+          }
+        }
         let {title, beAuthenticated} = obj 
-        let href = '/'
+        let href = `/${obj.slug}`
         return {
           title,
           href,
           beAuthenticated
         }
-      }
-      let {title, beAuthenticated} = obj 
-      let href = `/${obj.slug}`
-      return {
-        title,
-        href,
-        beAuthenticated
-      }
-  })
+    })
+  }
+
+  if (subFolder) {
+      menuArray = arr.map(obj => {
+        let {title, beAuthenticated} = obj 
+        let href = `/${subFolder}/${obj.slug}`
+        return {
+          title,
+          href,
+          beAuthenticated
+        }
+    })
+  }
+
   return menuArray
 }
 

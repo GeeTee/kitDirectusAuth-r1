@@ -27,7 +27,7 @@ export const actions = {
                     const {refresh_token, expires} = res
                     // console.log('LOGIN +page.server.js', {refresh_token})
                     
-                    cookies.set(DIRECTUS_COOKIE, refresh_token, {
+                    await cookies.set(DIRECTUS_COOKIE, refresh_token, {
                         maxAge: expires
                     });
 

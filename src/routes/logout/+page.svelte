@@ -6,7 +6,7 @@
     import { getContext } from "svelte"
     import Div from "$lib/layouts/DivHeader.svelte"
     export let data 
-    console.log('logout.svelte', {data})
+    // console.log('logout.svelte', {data})
 
     const headT = 'Déconnexion'
     const h2 = getContext('siteName')

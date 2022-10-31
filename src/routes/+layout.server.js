@@ -10,11 +10,11 @@ export const load = async ({ cookies }) => {
     const navGeneraleLinksRaw = await r.getNavGenerale()
     // console.log('root +layout.server.js', {navGeneraleLinksRaw})
     const navGeneraleLinks = s.builMenuArray(navGeneraleLinksRaw)
-    console.log('root +layout.server.js', {navGeneraleLinks})
+    // console.log('root +layout.server.js', {navGeneraleLinks})
 
     const navMetiersLinksRaw = await r.getNavMetiers()
     // console.log('root +layout.server.js', {navMetiersLinksRaw})
-    const navMetiersLinks = s.builMenuArray(navMetiersLinksRaw)
+    const navMetiersLinks = s.builMenuArray(navMetiersLinksRaw, 'activites')
     // console.log('root +layout.server.js', {navMetiersLinks})
 
     const refresh_token = cookies.get(DIRECTUS_COOKIE)
@@ -25,7 +25,7 @@ export const load = async ({ cookies }) => {
     if (refresh_token) {
         // console.log('+layout.server.js load on a cookie')
         const {data} = await r.directusRefresh(refresh_token)
-        // console.log('+layout.server.js ON A access_token step 1', data)
+        console.log('+layout.server.js ON A access_token step 1', data)
         const access_tocken = data.access_token
         // console.log('+layout.server.js ON A access_token step 2', {access_tocken})
         const newRefresh_tocken = data.refresh_token
