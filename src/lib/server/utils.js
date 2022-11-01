@@ -1,5 +1,7 @@
 const protectedRoutes = [
-    '/backend', '/logout'
+    '/backend', 
+    '/backend/settings', 
+    '/logout'
 ]
 
 const utilsServices = {

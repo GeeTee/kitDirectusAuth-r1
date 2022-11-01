@@ -1,7 +1,7 @@
 <script>
 
     import { page } from '$app/stores';
-    console.log('logout.svelte', $page.data)
+    // console.log('logout.svelte', $page.data)
 
     import { getContext } from "svelte"
     import Div from "$lib/layouts/DivHeader.svelte"

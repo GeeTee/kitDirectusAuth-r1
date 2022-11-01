@@ -46,5 +46,10 @@ export const handle = async ({event, resolve}) => {
             return redirect('/login', 'pas bon')
         }
 
+    if (refresh_token && location == '/login') { // NOT AUTHENTICATED && ON PROTECTED ROUTES
+            console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
+            return redirect('/logout', 'est déjà loggé')
+        }
+
     return resolve(event);
 }

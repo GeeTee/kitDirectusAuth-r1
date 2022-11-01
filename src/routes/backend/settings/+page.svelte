@@ -1,0 +1,1 @@
+<h2 class="subtitle has-text-centered is-uppercase">Settings</h2>
