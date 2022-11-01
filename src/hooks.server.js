@@ -1,4 +1,4 @@
-import u from '$lib/helpers/utils'
+import u from '$lib/server/utils'
 import {DIRECTUS_COOKIE} from '$lib/helpers/Env'
 const protectedRoutes = u.protectedRoutes
 
