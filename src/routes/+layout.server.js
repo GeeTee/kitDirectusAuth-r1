@@ -1,21 +1,13 @@
 import r from '$lib/helpers/req'
-import s from '$lib/helpers/scripts'
 import {DIRECTUS_COOKIE} from '$lib/helpers/Env'
 
 let user
 
-export const load = async ({ cookies }) => {
-    const settings = await r.getSettings()
-    // console.log('root +layout.server.js', {settings})
-    const navGeneraleLinksRaw = await r.getNavGenerale()
-    // console.log('root +layout.server.js', {navGeneraleLinksRaw})
-    const navGeneraleLinks = s.builMenuArray(navGeneraleLinksRaw)
-    // console.log('root +layout.server.js', {navGeneraleLinks})
+export const load = async ({ cookies, locals }) => {
 
-    const navMetiersLinksRaw = await r.getNavMetiers()
-    // console.log('root +layout.server.js', {navMetiersLinksRaw})
-    const navMetiersLinks = s.builMenuArray(navMetiersLinksRaw, 'activites')
-    // console.log('root +layout.server.js', {navMetiersLinks})
+    const settings = await r.getSettings()
+    const {navGeneraleLinks} = locals.navGeneraleLinks
+    const {navMetiersLinks} = locals.navMetiersLinks
 
     const refresh_token = cookies.get(DIRECTUS_COOKIE)
     if (!refresh_token) {

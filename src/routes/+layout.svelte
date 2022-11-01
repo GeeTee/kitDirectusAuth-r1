@@ -20,7 +20,7 @@
         user = {...data?.user}
     }
 
-    if (!data?.user.isAuthenticated) {
+    if (!data?.user?.isAuthenticated) {
         isAuthenticated = false
     }
 
