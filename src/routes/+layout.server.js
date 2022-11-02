@@ -3,9 +3,9 @@ import {DIRECTUS_COOKIE} from '$lib/helpers/Env'
 
 let user
 
-export const load = async ({ cookies, locals }) => {
+export const load = async ({ fetch, cookies, locals }) => {
 
-    const settings = await r.getSettings()
+    const settings = await r.getSettings(fetch)
     const {navGeneraleLinks} = locals.navGeneraleLinks
     const {navMetiersLinks} = locals.navMetiersLinks
 

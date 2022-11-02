@@ -1,7 +1,7 @@
 import {DIRECTUS_URL, PROJECT_TITLE, PROJECT_ID} from './Env'
 const url = DIRECTUS_URL
 
-const getAllArticles = async () => {
+const getAllArticles = async (fetch) => {
     const res = await fetch(`${url}/graphql`, {
         method: 'POST',
         headers: {
@@ -70,7 +70,7 @@ const getArticleBySlug = async (fetch,slug) => {
     return item
 }
 
-const getAllArticlesLinks = async () => {
+const getAllArticlesLinks = async (fetch) => {
     const res = await fetch(`${url}/graphql`, {
         method: 'POST',
         headers: {
@@ -96,63 +96,6 @@ const getAllArticlesLinks = async () => {
     const items = advanced_articles
     // console.log('req getAllArticlesLinks', {items})
     return items
-}
-
-const getAllTest = async () => {
-    const res = await fetch(`${url}/graphql`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            query: `
-                query {
-                    test {
-                        id
-                        title
-                        slug
-                        redaction
-                        cld_public_id
-                        gallery_photos
-                    }
-                }
-            `
-        })
-    })
-
-    const {data: {test}} = await res.json()
-    // console.log('req getAllTest', {test})
-    return test
-}
-
-const getTestSlug = async (slug) => {
-    if (typeof slug !== 'string') return
-    // console.log('req getTestSlug', {slug})
-    const res = await fetch(`${url}/graphql`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            query: `
-                query ($slug: String) {
-                    test (filter: {slug: {_eq: $slug}}) {
-                        title
-                        redaction
-                        cld_public_id
-                    }
-                }
-            `,
-            variables: {
-                slug
-            }
-        })
-    })
-
-    const {data: {test}} = await res.json()
-    const item = test[0]
-    // console.log('req getTestSlug', {item})
-    return item    
 }
 
 const getNavGenerale = async () => {
@@ -316,7 +259,7 @@ const directusUserByEmail = async (email) => {
 }
 
 // WEBSITE SETTINGS
-const getSettings = async () => {
+const getSettings = async (fetch) => {
     const res = await fetch(`${url}/graphql`,{
         method: 'POST',
         headers: {
@@ -380,8 +323,6 @@ const reqServices = {
     getArticleBySlug,
     getAllArticlesLinks,
     getAllArticles,
-    getAllTest,
-    getTestSlug,
     getSettings,
     directusLogin,
     directusCurrentUser,
