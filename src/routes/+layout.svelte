@@ -52,6 +52,7 @@
 <svelte:head>
     <link rel="stylesheet" href="{BASE_URL}/css/app.css">
 </svelte:head>
+
 <span>isAuthenticated : {isAuthenticated}</span>
 <Nav {isAuthenticated} />
 <div id="level-main-content" class="custom-bg" role="document">

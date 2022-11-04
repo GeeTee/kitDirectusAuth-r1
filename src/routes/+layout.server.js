@@ -2,6 +2,13 @@ import r from '$lib/helpers/req'
 import {DIRECTUS_COOKIE} from '$lib/helpers/Env'
 
 let user
+let isAuthenticated = false
+
+// $: console.log('ROOT +layout.server.js', u)
+// u.deleteUser()
+
+
+
 
 export const load = async ({ fetch, cookies, locals }) => {
 
@@ -9,35 +16,72 @@ export const load = async ({ fetch, cookies, locals }) => {
     const {navGeneraleLinks} = locals.navGeneraleLinks
     const {navMetiersLinks} = locals.navMetiersLinks
 
+    const gt_token = cookies.get('gt')
     const refresh_token = cookies.get(DIRECTUS_COOKIE)
-    if (!refresh_token) {
-        // console.log('+layout.server.js load pas de cookie')
-        user = {}
-    }
-    if (refresh_token) {
-        // console.log('+layout.server.js load on a cookie')
-        const {data} = await r.directusRefresh(refresh_token)
-        console.log('+layout.server.js ON A access_token step 1', data)
-        const access_tocken = data.access_token
-        // console.log('+layout.server.js ON A access_token step 2', {access_tocken})
-        const newRefresh_tocken = data.refresh_token
-        // console.log('+layout.server.js ON A newRefresh_tocken step 3', {newRefresh_tocken})
-        const expires = data.expires
-        // console.log('+layout.server.js ON A expires step 4', {expires})
-        // RENEW COOKIE
-        await cookies.delete(DIRECTUS_COOKIE)
-        cookies.set(DIRECTUS_COOKIE, newRefresh_tocken, {
-            maxAge: expires
-        })
-        user = {
-            isAuthenticated: true,
-            ...await r.directusCurrentUser(access_tocken)
+
+    console.log('ROOT +layout.server.js REACTION', {gt_token}, {refresh_token})
+
+    if (refresh_token && !gt_token) {
+        console.log('ROOT +layout.server.js refresh_tocken', refresh_token)
+        const data = await r.directusRefresh(refresh_token)
+        if (data) {
+            console.log('ROOT +layout.server.js refresh_tocken', {data})
+            const nRT = data.refresh_token
+            const {access_token, expires} = data
+            console.log('ROOT +layout.server.js compare refresh_tocken', refresh_token === nRT)
+            user = {
+                isAuthenticated: true,
+                ...await r.directusCurrentUser(access_token)
+            }
+            // if(refresh_token !== nRT) {
+            //     async () => {
+            //         await cookies.delete(DIRECTUS_COOKIE)
+            //         cookies.set(DIRECTUS_COOKIE, nRT, {
+            //             maxAge: expires
+            //         });
+            //     }
+            // }
+            console.log('ROOT +layout.server.js refresh_tocken (previous login)', {user})
+
+            return {
+            user,
+            settings,
+            navGeneraleLinks,
+            navMetiersLinks
+            }
+        }
+        // pas data
+        if (!data) {
+            await cookies.delete(DIRECTUS_COOKIE)
+            return {
+            settings,
+            navGeneraleLinks,
+            navMetiersLinks
+            }            
         }
     }
+
+
+    if (gt_token) {
+            user = {
+                isAuthenticated: true,
+                ...await r.directusCurrentUser(gt_token)
+            }
+            console.log('ROOT +layout.server.js gt_tocken (new login)', {user})
+            cookies.delete('gt')
+
+            return {
+            user,
+            settings,
+            navGeneraleLinks,
+            navMetiersLinks
+            }
+        }
+
     return {
-        user,
-        settings,
-        navGeneraleLinks,
-        navMetiersLinks
-    };
+    settings,
+    navGeneraleLinks,
+    navMetiersLinks
+    }
+
 }

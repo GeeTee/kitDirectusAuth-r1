@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores';
-    console.log('BACKEND +layout.svelte', $page)
+    // console.log('BACKEND +layout.svelte', $page)
     import Nav from "$lib/partials/navs/NavLinks.svelte";
 
     let path = $page.url.pathname
@@ -28,6 +28,7 @@
 
    
 </script>
+
 <div class="container">
     <h1 class="title has-text-centered">Backend</h1>
     <p>{first_name} {last_name} {email}</p>

@@ -7,6 +7,10 @@
         // DEV 
     import {DIRECTUS_EMAIL, DIRECTUS_PW} from '$lib/helpers/Env'
 
+    // export let form 
+
+    // $: console.log('LOGIN +page.svelte', {form})
+
     const headT = 'Connexion'
     const h2 = getContext('siteName')
 
@@ -33,6 +37,24 @@
         helpEmail = false
         helpPassword = false
     }
+
+    // async function handleSubmit(event) {
+    //     const data = new FormData(this);
+
+    //     const response = await fetch(this.action, {
+    //     method: 'POST',
+    //     body: data
+    //     });
+    //     /** @type {import('@sveltejs/kit').ActionResult} */
+    //     const result = await response.json();
+    //     console.log('LOGIN +page.svelte handleSubmit', {result})
+    //     if (result.type === 'success') {
+    //     // re-run all `load` functions, following the successful update
+    //     await invalidateAll();
+    //     }
+
+    //     applyAction(result);
+    // }
 </script>
 
 <Div
@@ -41,7 +63,11 @@
     {h2}
     beWell={true}
 >
-    <form id="login-form" name="login" method="POST">
+    <form 
+    id="login-form" 
+    name="login" 
+    method="POST"
+    >
         <legend class="subtitle is-4 is-uppercase">Se connecter</legend>
         <div class="columns">
             <div class="field column">

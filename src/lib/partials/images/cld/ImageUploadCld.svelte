@@ -18,6 +18,7 @@
     // $: src = cld_public_id !== ''? `https://res.cloudinary.com/geeteeimages/image/upload/c_scale,w_500,q_auto,f_jpg/Actibenne/banners/${cld_public_id}` : false  
 
     export let buttonText = 'Changer'
+    export let choisirText = 'Choisir une image'
     export let isOutlined = false
     export let imageInstalled = false
     export let defaultSource = "local"
@@ -147,7 +148,7 @@
         <img {src} alt="">
     </div>
 {:else}
-        <strong>Choisir une image</strong>
+        <strong>{choisirText}</strong>
 {/if}
 <div class="buttons block">
     <button 
