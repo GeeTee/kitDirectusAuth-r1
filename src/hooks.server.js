@@ -43,12 +43,12 @@ export const handle = async ({event, resolve}) => {
     // console.log('Hooks server js', {location})
 
     if (!refresh_token && protectedRoutes.includes(location)) { // NOT AUTHENTICATED && ON PROTECTED ROUTES
-            console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
+            // console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
             return redirect('/login', 'pas bon')
         }
 
     if (refresh_token && location == '/login') { // AUTHENTICATED && ON LOGIN
-            console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
+            // console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
             return redirect('/logout', 'est déjà loggé')
         }
 

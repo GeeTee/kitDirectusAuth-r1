@@ -15,22 +15,22 @@ export const load = async ({ fetch, cookies, locals }) => {
     const gt_token = cookies.get('gt')
     const refresh_token = cookies.get(DIRECTUS_COOKIE)
 
-    console.log('ROOT +layout.server.js REACTION', {gt_token}, {refresh_token})
+    // console.log('ROOT +layout.server.js REACTION', {gt_token}, {refresh_token})
 
     if (refresh_token && !gt_token) { // CASE A
-        console.log('ROOT +layout.server.js refresh_tocken // CASE A', refresh_token)
+        // console.log('ROOT +layout.server.js refresh_tocken // CASE A', refresh_token)
         const data = await r.directusRefresh(refresh_token)
         if (data) {
-            console.log('ROOT +layout.server.js refresh_tocken // CASE A', {data})
+            // console.log('ROOT +layout.server.js refresh_tocken // CASE A', {data})
             const nRT = data.refresh_token
             const {access_token} = data
-            console.log('ROOT +layout.server.js compare refresh_tocken // CASE A', refresh_token === nRT)
+            // console.log('ROOT +layout.server.js compare refresh_tocken // CASE A', refresh_token === nRT)
             user = {
                 isAuthenticated: true,
                 ...await r.directusCurrentUser(access_token)
             }
 
-            console.log('ROOT +layout.server.js refresh_tocken (previous login) // CASE A', {user})
+            // console.log('ROOT +layout.server.js refresh_tocken (previous login) // CASE A', {user})
 
             return {
             user,
@@ -41,7 +41,7 @@ export const load = async ({ fetch, cookies, locals }) => {
         }
         // pas data
         if (!data) { // ex on reload // CASE A BIS
-            console.log('// CASE A BIS')
+            // console.log('// CASE A BIS')
             await cookies.delete(DIRECTUS_COOKIE)
             throw redirect(307, '/login/?reason=1')          
         }
@@ -53,7 +53,7 @@ export const load = async ({ fetch, cookies, locals }) => {
                 isAuthenticated: true,
                 ...await r.directusCurrentUser(gt_token)
             }
-            console.log('ROOT +layout.server.js gt_tocken (new login) // CASE B', {user})
+            // console.log('ROOT +layout.server.js gt_tocken (new login) // CASE B', {user})
             cookies.delete('gt')
 
             return {

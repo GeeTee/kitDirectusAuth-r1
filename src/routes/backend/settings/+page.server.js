@@ -7,7 +7,7 @@ export const actions = {
         const site_name = data.get('site_name')
         const logo = data.get('logo')
         console.log('BACKEND SETTINGS +page.server.js', {site_name}, {logo})
-        const test = await settings.readByQuery({});
-        // console.log('BACKEND SETTINGS +page.server.js', {test})
+        const res = await settings.updateOne(1,{site_name, logo});
+        console.log('BACKEND SETTINGS +page.server.js', {res})
     }
 }

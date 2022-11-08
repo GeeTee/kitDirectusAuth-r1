@@ -153,10 +153,10 @@ const getNavMetiers = async () => {
 // DIRECTUS AUTH LOGIN LOGOUT
 
 const directusLogin = async (email, password) => {
-    console.log('Req directusLogin 0', typeof email, typeof password)
+    // console.log('Req directusLogin 0', typeof email, typeof password)
     if (typeof email !== 'string') return
     if (typeof password !== 'string') return
-    console.log('Req directusLogin 1', email, password)
+    // console.log('Req directusLogin 1', email, password)
     const res = await fetch(`${url}/auth/login`, {
         method: 'POST',
         headers: {
@@ -169,7 +169,7 @@ const directusLogin = async (email, password) => {
     })
 
     const {data} = await res.json()
-    console.log('Req directusLogin', {data})
+    // console.log('Req directusLogin 2', {data})
     return data
 }
 
