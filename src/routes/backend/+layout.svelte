@@ -7,6 +7,7 @@
 
     const {first_name, last_name, email, isAuthenticated} = $page.data.user
 
+    // console.log('ROOT +layout.svelte +++++ checkU', Object.keys($page.data.user).length)
 
     const settingsLinks = [
         {

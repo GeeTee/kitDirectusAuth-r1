@@ -1,14 +1,10 @@
+import { redirect } from '@sveltejs/kit'
 import r from '$lib/helpers/req'
 import {DIRECTUS_COOKIE} from '$lib/helpers/Env'
 
-let user
-let isAuthenticated = false
+let user = {}
 
-// $: console.log('ROOT +layout.server.js', u)
-// u.deleteUser()
-
-
-
+// $: checkU = Object.keys(user).length
 
 export const load = async ({ fetch, cookies, locals }) => {
 
@@ -21,27 +17,20 @@ export const load = async ({ fetch, cookies, locals }) => {
 
     console.log('ROOT +layout.server.js REACTION', {gt_token}, {refresh_token})
 
-    if (refresh_token && !gt_token) {
-        console.log('ROOT +layout.server.js refresh_tocken', refresh_token)
+    if (refresh_token && !gt_token) { // CASE A
+        console.log('ROOT +layout.server.js refresh_tocken // CASE A', refresh_token)
         const data = await r.directusRefresh(refresh_token)
         if (data) {
-            console.log('ROOT +layout.server.js refresh_tocken', {data})
+            console.log('ROOT +layout.server.js refresh_tocken // CASE A', {data})
             const nRT = data.refresh_token
-            const {access_token, expires} = data
-            console.log('ROOT +layout.server.js compare refresh_tocken', refresh_token === nRT)
+            const {access_token} = data
+            console.log('ROOT +layout.server.js compare refresh_tocken // CASE A', refresh_token === nRT)
             user = {
                 isAuthenticated: true,
                 ...await r.directusCurrentUser(access_token)
             }
-            // if(refresh_token !== nRT) {
-            //     async () => {
-            //         await cookies.delete(DIRECTUS_COOKIE)
-            //         cookies.set(DIRECTUS_COOKIE, nRT, {
-            //             maxAge: expires
-            //         });
-            //     }
-            // }
-            console.log('ROOT +layout.server.js refresh_tocken (previous login)', {user})
+
+            console.log('ROOT +layout.server.js refresh_tocken (previous login) // CASE A', {user})
 
             return {
             user,
@@ -51,23 +40,20 @@ export const load = async ({ fetch, cookies, locals }) => {
             }
         }
         // pas data
-        if (!data) {
+        if (!data) { // ex on reload // CASE A BIS
+            console.log('// CASE A BIS')
             await cookies.delete(DIRECTUS_COOKIE)
-            return {
-            settings,
-            navGeneraleLinks,
-            navMetiersLinks
-            }            
+            throw redirect(307, '/login/?reason=1')          
         }
     }
 
 
-    if (gt_token) {
+    if (gt_token) { // CASE B
             user = {
                 isAuthenticated: true,
                 ...await r.directusCurrentUser(gt_token)
             }
-            console.log('ROOT +layout.server.js gt_tocken (new login)', {user})
+            console.log('ROOT +layout.server.js gt_tocken (new login) // CASE B', {user})
             cookies.delete('gt')
 
             return {
@@ -77,6 +63,8 @@ export const load = async ({ fetch, cookies, locals }) => {
             navMetiersLinks
             }
         }
+
+    // console.log('ROOT +layout.server.js +++++ checkU', Object.keys(user).length)
 
     return {
     settings,

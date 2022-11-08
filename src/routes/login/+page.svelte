@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores'
     import {getContext} from 'svelte'
     // SVELTE COMPONENTS
     import Div from "$lib/layouts/DivHeader.svelte";
@@ -7,9 +8,12 @@
         // DEV 
     import {DIRECTUS_EMAIL, DIRECTUS_PW} from '$lib/helpers/Env'
 
-    // export let form 
+    // $: console.log('LOGIN +page.svelte', $page)
 
-    // $: console.log('LOGIN +page.svelte', {form})
+    const {url} = $page 
+    let loginMessage = ''
+
+    if (url.searchParams.get('reason') == 1) loginMessage = 'Une erreur étant survenue, merci de vous connecter de nouveau pour continuer'
 
     const headT = 'Connexion'
     const h2 = getContext('siteName')
@@ -63,6 +67,9 @@
     {h2}
     beWell={true}
 >
+    {#if loginMessage}
+        <span class="has-text-danger">{loginMessage}</span>
+    {/if}
     <form 
     id="login-form" 
     name="login" 

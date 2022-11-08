@@ -210,7 +210,7 @@ const directusRefresh = async (refresh_token) => {
     })
 
     const {data} = await res.json()
-    console.log('Req directusRefresh setp 3', {data})
+    // console.log('Req directusRefresh setp 3', {data})
     return data
 }
 

@@ -21,7 +21,7 @@ metiersBackendUpdateLinks.forEach(element => {
 metiersBackendDeleteLinks.forEach(element => {
     protectedRoutes.push(element.href)
 });
-console.log('Hooks server js', {protectedRoutes})
+// console.log('Hooks server js', {protectedRoutes})
 
 function redirect(location, body) {
     return new Response(body, {
@@ -40,11 +40,7 @@ export const handle = async ({event, resolve}) => {
     const refresh_token = event.cookies.get(DIRECTUS_COOKIE)
 
     const location = event.url.pathname
-    console.log('Hooks server js', {location})
-    // console.log('Hooks server js REACTION', refresh_token)
-    // if (refresh_token) event.locals.hToken = {hToken: {refresh_token}}
-    // if (!refresh_token) event.locals.hToken = {hToken: {refresh_token: null}}
-    
+    // console.log('Hooks server js', {location})
 
     if (!refresh_token && protectedRoutes.includes(location)) { // NOT AUTHENTICATED && ON PROTECTED ROUTES
             console.log('Hooks server js PAS refresh_token - ON protectedRoutes', {location})
