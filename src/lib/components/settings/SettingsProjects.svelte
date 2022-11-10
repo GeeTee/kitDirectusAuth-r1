@@ -44,17 +44,17 @@
 
     const saveUpdates = async (e) => {
         console.log('SETTINGSPROJECT saveUpdates', e.detail, {logoToDelete})
-        if (logoToDelete) {
-            dispatch('logo-to-delete', logoToDelete)
-            // f.deleteOneImg(f.slashToUnderscore(logoToDelete))
+        // if (logoToDelete) {
+        //     dispatch('logo-to-delete', logoToDelete)
+        //     // f.deleteOneImg(f.slashToUnderscore(logoToDelete))
             
-        }
+        // }
         
     }
 
-    const logoDeleted = (e) => {
-        logoToDelete = e.detail
-        console.log('SETTINGS +page.svelte logoDeleted', {logoToDelete})
+    const logoDeleted = () => {
+        // logoToDelete = e.detail
+        console.log('SETTINGS +page.svelte logoDeleted')
         logo = null
     }
 
@@ -72,7 +72,7 @@
     cld_public_id={logo} 
     uploadPreset='Actibenne-logo'
     on:get-img={gettingImg}
-    on:delete-img={logoDeleted}
+    on:logo-deleted={logoDeleted}
     />
 <form method="POST" action="?/projectSettings">
     <input 
