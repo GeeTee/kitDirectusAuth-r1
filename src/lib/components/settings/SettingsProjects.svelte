@@ -1,30 +1,26 @@
 <script>
     import {createEventDispatcher} from 'svelte'
     import f from '$lib/helpers/scripts'
-    import TextInput from "$lib/UI/TextInput.svelte"
     import HtmlO from "$lib/UI/EditableHtml-0.svelte"
-	import ManagingOneImg from '$lib/components/images/ManagingOneImg.svelte'
     import Buttons from '$lib/UI/ButtonsCancelConfirm.svelte'
 
-    const dispatch = createEventDispatcher()
+    // const dispatch = createEventDispatcher()
 
     export let itemToEdit = null
 
     let site_name = ''
     let domain_name = ''
     let logo = ''
-    let logoToDelete = ''
+    let logoToDelete = null
 
     let itemBup = {}
 
     let site_nameValid = true
-    let logoValid = true
 
     if (itemToEdit) {
         itemBup = {...itemToEdit}
         site_name = itemToEdit.site_name
         domain_name = itemToEdit.domain_name
-        logo = itemToEdit.logo
     }
 
     // export let projectSettings = {}
@@ -42,22 +38,6 @@
         isEdited = false
     }
 
-    const saveUpdates = async (e) => {
-        console.log('SETTINGSPROJECT saveUpdates', e.detail, {logoToDelete})
-        // if (logoToDelete) {
-        //     dispatch('logo-to-delete', logoToDelete)
-        //     // f.deleteOneImg(f.slashToUnderscore(logoToDelete))
-            
-        // }
-        
-    }
-
-    const logoDeleted = () => {
-        // logoToDelete = e.detail
-        console.log('SETTINGS +page.svelte logoDeleted')
-        logo = null
-    }
-
     const gettingImg = (e) => { // in form preview
         logo = e.detail.cld_public_id
         console.log('gettingImg', {logo})
@@ -66,14 +46,6 @@
 </script>
 
 {#if isEdited}
-    <ManagingOneImg 
-    choisirText='Sélectionner un logo'
-    w=150
-    cld_public_id={logo} 
-    uploadPreset='Actibenne-logo'
-    on:get-img={gettingImg}
-    on:logo-deleted={logoDeleted}
-    />
 <form method="POST" action="?/projectSettings">
     <input 
     type="text" 
@@ -85,20 +57,12 @@
     required
     >
 
-    <input 
-    type="hidden" 
-    name="logo" 
-    id="logo"
-    value={logo}
-    >
-
     <Buttons 
     cancelText='Abandonner'
     saveText='Enregistrer'
     {disableConfirm}
     {disableCancel}
     on:button-canceling={cancelUpdates}
-    on:button-saving={saveUpdates}
     />
     </form>
 {/if}
@@ -108,13 +72,6 @@
     fct={editingSettings}
     >
         <ul>
-            <li>
-                {#if logo}
-                    <img src={f.bannerResizeW(100, logo)} alt="logo">
-                {:else}
-                    Pas de logo
-                {/if}
-            </li>
             <li>{site_name}</li>
             <li>{domain_name} (ne peut être modifié)</li>
         </ul>

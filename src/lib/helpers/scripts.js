@@ -181,7 +181,7 @@ const deleteOneImg = async (slug) => {
   if (!slug || typeof slug !== 'string') return
   console.log('deleteOneImg', {slug})
 
-  const res = await fetch('/api/images', {
+  const res = await fetch('http://127.0.0.1:5173/api/images', {
       method: 'DELETE',
       headers: {
           'content-type': 'application/json'

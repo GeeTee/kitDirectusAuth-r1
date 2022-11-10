@@ -1,6 +1,6 @@
 <script>
     import {createEventDispatcher} from 'svelte'
-    // import f from '$lib/helpers/scripts'
+    import f from '$lib/helpers/scripts'
     import ImagUpload from '$lib/partials/images/cld/ImageUploadCld.svelte'
 
     const dispatch = createEventDispatcher()
@@ -19,9 +19,15 @@
     }
     const deletingImg = (e) => {
         console.log('deletingImg', e.detail)
-        // f.deleteOneImg(f.slashToUnderscore(e.detail))
-        dispatch('logo-deleted')
+        f.deleteOneImg(f.slashToUnderscore(e.detail))
+        // dispatch('logo-deleted')
     }
+
+    // export const deletImg = (elt) => {
+    //     f.deleteOneImg(f.slashToUnderscore(elt))
+    // }
+
+
 </script>
 
 {#if cld_public_id}
@@ -37,7 +43,7 @@
     {uploadPreset }
     dispatchTitle='renew-img-id'
     on:renew-img-id={getNewImgId}    
-    on:delete-img={deletingImg}
+    on:delete-img
     />
 {/if}
 {#if !cld_public_id}
