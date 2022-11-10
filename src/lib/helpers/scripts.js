@@ -178,13 +178,19 @@ const thumbImg = (public_id) => {
 }
 
 const deleteOneImg = async (slug) => { 
+  if (!slug || typeof slug !== 'string') return
   console.log('deleteOneImg', {slug})
-  const response = await fetch(`/images/${slug}`, {
-    method: "DELETE"
-  });
-  if(response.ok) {
-    console.log('détruit!')
-  }
+
+  const res = await fetch('/api/images', {
+      method: 'DELETE',
+      headers: {
+          'content-type': 'application/json'
+      },
+      body: JSON.stringify({slug})
+  })
+
+  const message = await res.json()
+  console.log('home page', {message})
 }
 
 const deleteAllImgsFromArray = async (array) => {
@@ -194,22 +200,22 @@ const deleteAllImgsFromArray = async (array) => {
 }
 
 const scriptsServices = {
-    condensifyPhone,
-    checkAuthentif,
-    builMenuArray,
-    getEmbedUrlYoutube,
-    isYouTube,
-    definitiveDeletingBanner,
-    createSrcJpgSrcWebp,
-    imgNoDim,
-    imgSquareW,
-    bannerResizeWH,
-    bannerResizeW,
-    thumbImg,
-    deleteOneImg,
-    deleteAllImgsFromArray,
-    slashToUnderscore,
-    underscoreToSlash,
-    deleteOneEltFromArray
+  condensifyPhone,
+  checkAuthentif,
+  builMenuArray,
+  getEmbedUrlYoutube,
+  isYouTube,
+  definitiveDeletingBanner,
+  createSrcJpgSrcWebp,
+  imgNoDim,
+  imgSquareW,
+  bannerResizeWH,
+  bannerResizeW,
+  thumbImg,
+  deleteOneImg,
+  deleteAllImgsFromArray,
+  slashToUnderscore,
+  underscoreToSlash,
+  deleteOneEltFromArray
 }
 export default scriptsServices

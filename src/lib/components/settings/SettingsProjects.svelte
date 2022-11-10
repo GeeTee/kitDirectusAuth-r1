@@ -13,6 +13,7 @@
     let site_name = ''
     let domain_name = ''
     let logo = ''
+    let logoToDelete = ''
 
     let itemBup = {}
 
@@ -35,30 +36,29 @@
     const editingSettings = () => isEdited = true
 
     const cancelUpdates = (e) => {
-        console.log('cancelUpdates', e.detail)
-        site_name = itemBup.site_name  
+        console.log('SETTINGSPROJECT cancelUpdates', {logoToDelete}, e.detail)
+        site_name = itemBup.site_name
         logo = itemBup.logo
         isEdited = false
     }
 
-    const saveUpdates = (e) => {
-        // console.log('saveUpdates', e.detail)
-        // const itemUpdated = {...itemBup}
-        // if (itemBup.site_name !== site_name) {
-        //     console.log('saveUpdates', site_name)
-        //     itemUpdated.site_name = site_name
-        // }
-        // if (itemBup.logo !== logo) {
-        //     console.log('saveUpdates', logo)
-        //     itemUpdated.logo = logo
-        // }  
-        // console.log('saveUpdates',{itemUpdated})  
-        // dispatch('save-item-updated', itemUpdated)  
-        // isEdited = false
+    const saveUpdates = async (e) => {
+        console.log('SETTINGSPROJECT saveUpdates', e.detail, {logoToDelete})
+        if (logoToDelete) {
+            dispatch('logo-to-delete', logoToDelete)
+            // f.deleteOneImg(f.slashToUnderscore(logoToDelete))
+            
+        }
+        
     }
 
-    const gettingImg = (e) => {
-        // console.log('gettingImg', e.detail)
+    const logoDeleted = (e) => {
+        logoToDelete = e.detail
+        console.log('SETTINGS +page.svelte logoDeleted', {logoToDelete})
+        logo = null
+    }
+
+    const gettingImg = (e) => { // in form preview
         logo = e.detail.cld_public_id
         console.log('gettingImg', {logo})
     }
@@ -72,6 +72,7 @@
     cld_public_id={logo} 
     uploadPreset='Actibenne-logo'
     on:get-img={gettingImg}
+    on:delete-img={logoDeleted}
     />
 <form method="POST" action="?/projectSettings">
     <input 
@@ -96,6 +97,8 @@
     saveText='Enregistrer'
     {disableConfirm}
     {disableCancel}
+    on:button-canceling={cancelUpdates}
+    on:button-saving={saveUpdates}
     />
     </form>
 {/if}
@@ -105,8 +108,6 @@
     fct={editingSettings}
     >
         <ul>
-            <li>{site_name}</li>
-            <li>{domain_name} (ne peut être modifié)</li>
             <li>
                 {#if logo}
                     <img src={f.bannerResizeW(100, logo)} alt="logo">
@@ -114,6 +115,8 @@
                     Pas de logo
                 {/if}
             </li>
+            <li>{site_name}</li>
+            <li>{domain_name} (ne peut être modifié)</li>
         </ul>
     </HtmlO>
 {/if}

@@ -17,7 +17,13 @@
 
     if (data?.user) {
         isAuthenticated = data?.user?.isAuthenticated
-        user = {...data?.user}
+        user = {
+            isAuthenticated: data?.user?.isAuthenticated,
+            first_name: data?.user?.first_name,
+            last_name: data?.user?.last_name,
+            email: data?.user?.email,
+        }
+        // user = {...data?.user}
     }
 
     if (!data?.user?.isAuthenticated) {
@@ -53,7 +59,10 @@
     <link rel="stylesheet" href="{BASE_URL}/css/app.css">
 </svelte:head>
 
-<span>isAuthenticated : {isAuthenticated}</span>
+{#if isAuthenticated}
+    <span>isAuthenticated : {user.first_name} / {user.last_name}</span>
+{/if}
+
 <Nav {isAuthenticated} />
 <div id="level-main-content" class="custom-bg" role="document">
   <main class="py-5" data-sveltekit-prefetch>

@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from '$app/stores'
 
 const user = writable({})
 

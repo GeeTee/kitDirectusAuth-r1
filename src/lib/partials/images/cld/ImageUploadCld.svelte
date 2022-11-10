@@ -177,7 +177,7 @@
     phrase='détruire'
     on:confirmation={() => {
         console.log('delete-img')
-        dispatch('delete-img')
+        dispatch('delete-img', cld_public_id)
         openImgConfirm = false
     }}
     on:leaving={

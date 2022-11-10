@@ -209,9 +209,23 @@ const directusRefresh = async (refresh_token) => {
             })
     })
 
-    const {data} = await res.json()
-    // console.log('Req directusRefresh setp 3', {data})
-    return data
+    const response = await res.json()
+
+    // console.log('Req directusRefresh setp 3', response)
+
+    if (response?.errors && response?.errors[0].message == 'Invalid user credentials.') {
+        console.log('Req updateSettings step 1', 'Token expired')
+        return {message: 'Invalid user credentials.'}
+    }
+
+    return {
+        message: 'refreshed token ok',
+        credentials: response.data
+    }
+
+    // const {data} = await res.json()
+    // // console.log('Req directusRefresh setp 3', {data})
+    // return data
 }
 
 const directusCurrentUser = async (access_token) => {
@@ -317,6 +331,37 @@ const getSettings = async (fetch) => {
     return website_settings
 }
 
+const updateSettings = async (access_token, obj) => {
+    if (!access_token || !obj) return
+    if (typeof access_token !== 'string') return
+    if (typeof obj !== 'object') return
+    // console.log('Req updateSettings step 0', {access_token}, {obj})
+    const res = await fetch(`${url}/items/website_settings`, {
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + access_token,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    })
+
+    // const {data} = await res.json()
+    const response = await res.json()
+    // console.log('Req updateSettings step 1', response.errors[0].message)
+
+    if (response?.errors && response?.errors[0].message == 'Token expired') {
+        console.log('Req updateSettings step 1', 'Token expired')
+        return {message: 'Token expired'}
+    }
+
+    return {
+        message: 'settings ok',
+        settings: response.data
+    }
+
+    // return {message: 'Token expired'}
+}
+
 const reqServices = {
     getNavGenerale,
     getNavMetiers,
@@ -324,6 +369,7 @@ const reqServices = {
     getAllArticlesLinks,
     getAllArticles,
     getSettings,
+    updateSettings,
     directusLogin,
     directusCurrentUser,
     directusUserByEmail,

@@ -14,6 +14,7 @@ export const actions = {
         // console.log('LOGOUT +page.server.js', res)
         if (res?.message == 'Logged Out') {
             await cookies.delete(DIRECTUS_COOKIE)
+            await cookies.delete('gt')
             throw redirect(303, '/')
         }
 
