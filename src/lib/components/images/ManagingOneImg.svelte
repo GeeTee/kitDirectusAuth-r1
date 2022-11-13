@@ -10,18 +10,19 @@
     export let w = 500
     export let uploadPreset = 'Actibenne_banners'
     export let choisirText = 'Choisir une image'
+    export let showDeleteImg = false
 
     const getNewImgId = (e) => {
-        console.log('getNewImgId', e.detail)
+        // console.log('getNewImgId', e.detail)
         const {public_id} = e.detail
         cld_public_id = public_id
         dispatch('get-img',{cld_public_id})
     }
-    const deletingImg = (e) => {
-        console.log('deletingImg', e.detail)
-        f.deleteOneImg(f.slashToUnderscore(e.detail))
-        // dispatch('logo-deleted')
-    }
+    // const deletingImg = (e) => {
+    //     console.log('deletingImg', e.detail)
+    //     f.deleteOneImg(f.slashToUnderscore(e.detail))
+    //     // dispatch('logo-deleted')
+    // }
 
     // export const deletImg = (elt) => {
     //     f.deleteOneImg(f.slashToUnderscore(elt))
@@ -37,7 +38,7 @@
     {choisirText}
     {w}
     isOutlined={true}
-    showDeleteImg={true}
+    {showDeleteImg}
     buttonTextDelete={`Enlever l'image`}
     imageInstalled={true}
     {uploadPreset }

@@ -1,8 +1,7 @@
 <script>
 	export let enabled = false
-	export let fct = null
+	export let fct;
 	export let isOutlined = false
-	export let formactionSource = null
 
 	let classBase = []
 	if (isOutlined) {
@@ -22,17 +21,7 @@
 	// console.log({classL})
 	// console.log(fct)
 </script>
-
-{#if !fct && !formactionSource}
-<button 
-class={classL} 
-disabled={!enabled}
->
-	<slot />
-</button>
-{/if}
-
-{#if fct && !formactionSource}
+{#if fct}
 <button 
 class={classL} 
 disabled={!enabled}
@@ -40,26 +29,11 @@ on:click={fct}
 >
 	<slot />
 </button>
-{/if}
-
-{#if !fct && formactionSource}
+{:else}
 <button 
 class={classL} 
 disabled={!enabled}
-formaction={formactionSource}
 >
 	<slot />
 </button>
 {/if}
-
-{#if fct && formactionSource}
-<button 
-class={classL} 
-disabled={!enabled}
-formaction={formactionSource}
-on:click={fct}
->
-	<slot />
-</button>
-{/if}
-

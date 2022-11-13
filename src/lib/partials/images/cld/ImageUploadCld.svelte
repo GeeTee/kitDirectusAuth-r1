@@ -127,7 +127,7 @@
             showAdvancedOptions,
                 }, (error, result) => {
                     if (!error && result && result.event === "success") {
-                        console.log('CLD UPLOAD: ', result.info);
+                        // console.log('CLD UPLOAD: ', result.info);
 
                         dispatch(dispatchTitle, {
                             public_id: result.info.public_id, 
@@ -174,7 +174,7 @@
     <Confirmation
     openModal={openImgConfirm}
     title={`Détruire la vidéo`}
-    phrase='détruire'
+    phrase='détruire définitivement'
     on:confirmation={() => {
         console.log('delete-img')
         dispatch('delete-img', cld_public_id)

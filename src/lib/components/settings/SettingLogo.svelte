@@ -1,54 +1,67 @@
 <script>
-    import {createEventDispatcher} from 'svelte'
+    import {beforeNavigate} from '$app/navigation'
     import f from '$lib/helpers/scripts'
     import HtmlO from "$lib/UI/EditableHtml-0.svelte"
 	import ManagingOneImg from '$lib/components/images/ManagingOneImg.svelte'
-    import Buttons from '$lib/UI/ButtonsCancelConfirm.svelte'
+    import Buttons from '$lib/UI/ButtonsCancelDo.svelte'
 
-    const dispatch = createEventDispatcher()
+    beforeNavigate(
+        () => console.log('beforeNavigate')
+    )
 
-
-
-  
     export let logoData = null
-    $: logo = logoData? logoData : null
-    $: logoBup = logoData? logoData : null
+    $: logo = logoData ?? null
+    $: logoBup = logoData ?? null
+
+    $: enableDoing = logo? true : false
+    $: enableCanceling = logo? true : false
+
+    // $: console.log('$: SETTINGLOGO', {logo}, {logoBup}, {logoToDelete})
 
     let logoToDelete = null
+    let action = null
 
-    let imgManager
+    let doText='Confirmer'
+    let cancelText='Abandonner'
 
-    let site_nameValid = true
-    let logoValid = true
-
-
-    // export let projectSettings = {}
-    // const {site_name, domain_name, logo} = projectSettings
     let isEdited = false
-    let disableConfirm = true; 
-    let disableCancel = true; 
 
     const editingSettings = () => isEdited = true
 
-    const cancelUpdates = () => {
-        logo = logoBup
+    const cancelUpdates = async (e) => {
+        action = await e.detail.action
+
+        if (logoBup && logo === logoToDelete) logo = logoBup
+
+        if (!logoBup && logo ) {
+            logoToDelete = logo
+            logo = null
+        }
+
+        if (logo !== logoBup && !logoToDelete) {
+            logoToDelete = logo
+            logo = logoBup
+        }
+
     }
 
-    const saveUpdates = async () => {
-        if (logoToDelete) imgManager.deletImg(logoToDelete)
-        // await imgManager.deletImg(logoToDelete)
+    const checkUpdates = async (e) => {
+        action = await e.detail.action
+
+        if (logoBup && logo === logoToDelete) logoToDelete = logoBup
+
+        if (logo !== logoBup && !logoToDelete) logoToDelete = logoBup
+
     }
 
     const logoDeleting = (e) => {
         logoToDelete = e.detail
         logo = null
-        // console.log('SETTINGS +page.svelte logoDeleted', {logo}, {logoToDelete})
-        // dispatch('logo-to-delete', logoToDelete)
     }
 
     const gettingImg = (e) => { // in form preview
         logo = e.detail.cld_public_id
-        console.log('gettingImg', {logo})
+        console.log('SETTINGLOGO gettingImg', {logo}, {logoToDelete}, {logoBup})
     }
 
 </script>
@@ -59,10 +72,20 @@
     w=150
     cld_public_id={logo} 
     uploadPreset='Actibenne-logo'
+    showDeleteImg={true}
     on:get-img={gettingImg}
     on:delete-img={logoDeleting}
     />
+
+
     <form method="POST" action="?/logoSettings">
+
+    <input 
+    type="hidden" 
+    name="action" 
+    id="action"
+    value={action}
+    >
 
     <input 
     type="hidden" 
@@ -77,20 +100,28 @@
     id="logoToDelete"
     value={logoToDelete}
     >
-    
-    {#if !logoToDelete}
-        <button>Save</button>
-    {/if}
-    
-    {#if logoToDelete}
-        <button formaction="?/logoDelete">Delete</button> <br> <br>
-        <button on:click={cancelUpdates}>Abandonner</button>
-    {/if}
+
+    <input 
+    type="hidden" 
+    name="logoBup" 
+    id="logoBup"
+    value={logoBup}
+    >
+
+    <Buttons 
+    {doText}
+    {cancelText}
+    {enableDoing}
+    {enableCanceling}
+    whichComponent='SettingLogo'
+    on:button-canceling={cancelUpdates}
+    on:button-doing={checkUpdates}
+    />
     </form>
 {/if}
 {#if !isEdited}
     <HtmlO 
-    label={`Project infos`}
+    label={`Project logo`}
     fct={editingSettings}
     >
         {#if logo}

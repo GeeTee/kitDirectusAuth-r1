@@ -1,3 +1,4 @@
+import {BASE_URL} from '$lib/helpers/Env'
 const condensifyPhone = (phone) => {
     if (typeof phone === 'string') {
         return phone.trim().replace(/ /g, '')
@@ -181,7 +182,7 @@ const deleteOneImg = async (slug) => {
   if (!slug || typeof slug !== 'string') return
   console.log('deleteOneImg', {slug})
 
-  const res = await fetch('http://127.0.0.1:5173/api/images', {
+  const res = await fetch(`${BASE_URL}/api/images`, {
       method: 'DELETE',
       headers: {
           'content-type': 'application/json'
@@ -190,7 +191,7 @@ const deleteOneImg = async (slug) => {
   })
 
   const message = await res.json()
-  console.log('home page', {message})
+  console.log('Retout API images', {message})
 }
 
 const deleteAllImgsFromArray = async (array) => {

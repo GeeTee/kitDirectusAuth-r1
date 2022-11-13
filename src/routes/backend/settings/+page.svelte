@@ -5,13 +5,6 @@
 
     // console.log('BACKEND SETTINGS +page.svelte $page', $page)
     let {data: {settings}} = $page
-    // console.log('BACKEND SETTINGS +page.svelte', {settings})
-
-    // export let form 
-    // $: console.log(form)
-    // $: doit = (form && form?.done == 'ok') ? true : false
-
-    // let toDelete = null
 
     const projectSettings = {
         site_name: settings.site_name,
